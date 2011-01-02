@@ -11,7 +11,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Bitmap.Config;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.heychinaski.droid.wp.trails.color.ColorGenerator;
@@ -213,14 +212,14 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 
 		@Override
 		public void recreateCache() {
-			Log.d("Cache", "Recreating cache");
+//			Log.d("Cache", "Recreating cache");
 			Bitmap bitmap = null;
 			if(cache != null) {
 				bitmap = cache.get();
 			}
 			
 			if(bitmap == null) {
-				Log.d("Cache", "Reallocating bitmap");
+//				Log.d("Cache", "Reallocating bitmap");
 				bitmap = Bitmap.createBitmap(width, height, Config.RGB_565);
 				cacheCanvas = new Canvas(bitmap);
 			}

@@ -30,7 +30,7 @@ public abstract class DrawingThread extends Thread {
 	
 	private int framesPerSecond = DEFAULT_FRAMES_PER_SECOND;
 
-	private FrameRateCalculator fpsCalculator = new FrameRateCalculator();
+//	private FrameRateCalculator fpsCalculator = new FrameRateCalculator();
 	
 	public DrawingThread(SurfaceHolder surfaceHolder, Context applicationContext) {
 		// keep a reference of the context and the surface
