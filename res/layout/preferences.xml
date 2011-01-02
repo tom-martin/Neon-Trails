@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android">
-            <ListPreference
-                android:key="frames_per_second"
-                android:title="@string/title_frames_per_second"
-                android:summary="@string/summary_frames_per_second"
-                android:entries="@array/entries_frames_per_second"
-                android:entryValues="@array/entryvalues_frames_per_second"
-                android:dialogTitle="@string/title_frames_per_second" />
-                
-            <ListPreference
-                android:key="line_width"
-                android:title="@string/title_line_width"
-                android:summary="@string/summary_line_width"
-                android:entries="@array/entries_line_width"
-                android:entryValues="@array/entryvalues_line_width"
-                android:dialogTitle="@string/title_line_width" />
-                
-    
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<ListPreference android:key="frames_per_second"
+		android:title="@string/title_frames_per_second" android:summary="@string/summary_frames_per_second"
+		android:entries="@array/entries_frames_per_second"
+		android:entryValues="@array/entryvalues_frames_per_second"
+		android:dialogTitle="@string/title_frames_per_second" />
+
+	<ListPreference android:key="line_width" android:title="@string/title_line_width"
+		android:summary="@string/summary_line_width" android:entries="@array/entries_line_width"
+		android:entryValues="@array/entryvalues_line_width"
+		android:dialogTitle="@string/title_line_width" />
+
+	<ListPreference android:key="trail_speed" android:title="@string/title_trail_speed"
+		android:summary="@string/summary_trail_speed" android:entries="@array/entries_trail_speed"
+		android:entryValues="@array/entryvalues_trail_speed"
+		android:dialogTitle="@string/title_trail_speed" />
+
+
 </PreferenceScreen>

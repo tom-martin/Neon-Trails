@@ -10,7 +10,7 @@
 		<item>60</item>
 	</string-array>
 	
-	   <string-array name="entries_line_width">
+   <string-array name="entries_line_width">
         <item>Thin</item>
         <item>Medium</item>
         <item>Thick</item>
@@ -19,5 +19,18 @@
         <item>THIN</item>
         <item>MEDIUM</item>
         <item>THICK</item>
+    </string-array>
+    
+    <string-array name="entries_trail_speed">
+        <item>Slow (Recommended)</item>
+        <item>Medium</item>
+        <item>Fast</item>
+        <item>Very Fast</item>
+    </string-array>
+    <string-array name="entryvalues_trail_speed">
+        <item>2000</item>
+        <item>1000</item>
+        <item>500</item>
+        <item>100</item>
     </string-array>
 </resources>

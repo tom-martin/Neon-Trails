@@ -112,6 +112,9 @@ public class TrailsWallpaperService extends WallpaperService {
 			
 			String lineWidth = prefs.getString("line_width", "MEDIUM");
 			drawingThread.setLineWidth(LineWidth.valueOf(lineWidth));
+			
+			int trail_speed = Integer.parseInt(prefs.getString("trail_speed", "2000"));
+			drawingThread.setAdvanceTime(trail_speed);
 		}
 	}
 }

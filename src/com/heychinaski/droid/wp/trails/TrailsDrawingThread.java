@@ -25,7 +25,7 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 		THIN, MEDIUM, THICK
 	}
 	
-	private final static int ADVANCE_TIME = 20;
+	private final static int DEFAULT_ADVANCE_TIME = 2000;
 	private static final int MAX_TRAILS = 200;
 	private Grid grid = null;
 	private int newTrailsRequired = 5;
@@ -33,6 +33,8 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 	private static final int LINE_LENGTH = 20;
 	
 	private LineWidth lineWidth = LineWidth.THIN;
+	
+	private int advanceTime = DEFAULT_ADVANCE_TIME;
 	
 	private List<Trail> trails = new ArrayList<Trail>();
 	private List<TrailView> trailViews = new ArrayList<TrailView>();
@@ -72,7 +74,7 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 		
 		for(int i = 0; i < trails.size(); i++) {
 			Trail trail = trails.get(i);
-			if(currentTime - trail.getLastAdvanceTime() > ADVANCE_TIME) {
+			if(currentTime - trail.getLastAdvanceTime() > advanceTime) {
 				if(!trail.isTerminated()) {
 					trail.advance();
 
@@ -173,7 +175,7 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 
 	@Override
 	public int getAdvanceTime() {
-		return ADVANCE_TIME;
+		return advanceTime;
 	}
 	
 	@Override
@@ -229,5 +231,9 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 			cache = new SoftReference<Bitmap>(bitmap);
 		}
 
+	}
+
+	public void setAdvanceTime(int advanceTime) {
+		this.advanceTime = advanceTime;
 	}
 }

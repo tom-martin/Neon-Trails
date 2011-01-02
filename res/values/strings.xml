@@ -9,4 +9,7 @@
     
     <string name="title_line_width">Trail thickness</string>
     <string name="summary_line_width">Thickness of the trails</string>
+    
+    <string name="title_trail_speed">Trail speed</string>
+    <string name="summary_trail_speed">How fast the trails move (Slower trails conserve battery and render more smoothly)</string>
 </resources>
