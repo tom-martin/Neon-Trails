@@ -108,9 +108,12 @@ public class TrailView {
 			
 			if(!trail.isTerminated()) {
 				paint.setColor(endColor);
+				
+				final int radius = Math.min(renderContext.getLineLength() / 2, renderContext.getLineWidthInPixels());
 				for(int i = 0; i < blurs.length; i++) {
 					paint.setMaskFilter(blurs[i]);
-					c.drawCircle(pointB.x, pointB.y, renderContext.getLineWidthInPixels(), paint);	
+					
+					c.drawCircle(pointB.x, pointB.y, radius, paint);	
 				}
 				paint.setMaskFilter(null);
 			}

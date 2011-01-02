@@ -30,11 +30,13 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 	private Grid grid = null;
 	private int newTrailsRequired = 5;
 	
-	private static final int LINE_LENGTH = 20;
+	private static final int DEFAULT_LINE_LENGTH = 20;
 	
 	private LineWidth lineWidth = LineWidth.THIN;
 	
 	private int advanceTime = DEFAULT_ADVANCE_TIME;
+	
+	private int lineLength = DEFAULT_LINE_LENGTH;
 	
 	private List<Trail> trails = new ArrayList<Trail>();
 	private List<TrailView> trailViews = new ArrayList<TrailView>();
@@ -151,19 +153,19 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 
 	@Override
 	public void convertGridPointToCanvasSpace(Point gridPoint) {
-		gridPoint.x *= LINE_LENGTH;
-		gridPoint.y *= LINE_LENGTH;
+		gridPoint.x *= lineLength;
+		gridPoint.y *= lineLength;
 		
-		gridPoint.x += LINE_LENGTH;
-		gridPoint.y += LINE_LENGTH;
+		gridPoint.x += lineLength;
+		gridPoint.y += lineLength;
 	}
 	
 	@Override
 	public void setSurfaceSize(int width, int height) {
 		super.setSurfaceSize(width, height);
 		
-		final int gridWidth = (width / LINE_LENGTH) - 1;
-		final int gridHeight = (height / LINE_LENGTH) - 1;
+		final int gridWidth = (width / lineLength) - 1;
+		final int gridHeight = (height / lineLength) - 1;
 		
 		if(grid == null) {
 			grid = new Grid(gridWidth, gridHeight);
@@ -180,17 +182,17 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 	
 	@Override
 	public int getLineLength() {
-		return LINE_LENGTH;
+		return lineLength;
 	}
 	
 	@Override
 	public int getLineWidthInPixels() {
 		if(lineWidth == LineWidth.THIN) {
-			return LINE_LENGTH / 4;
+			return lineLength / 4;
 		} else if(lineWidth == LineWidth.THICK) {
-			return LINE_LENGTH - 2;
+			return lineLength - 2;
 		} else {
-			return LINE_LENGTH / 2;
+			return lineLength/ 2;
 		}
 	}
 	
@@ -235,5 +237,13 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 
 	public void setAdvanceTime(int advanceTime) {
 		this.advanceTime = advanceTime;
+	}
+
+	public void setLineLength(int lineLength) {
+		if(lineLength != this.lineLength) {
+			recreateCache = true;
+			this.lineLength = lineLength;
+			setSurfaceSize(width, height);
+		}
 	}
 }

@@ -110,6 +110,9 @@ public class TrailsWallpaperService extends WallpaperService {
 			int framesPerSecond = Integer.parseInt(prefs.getString("frames_per_second", "30"));
 			drawingThread.setFramesPerSecond(framesPerSecond);
 			
+			String lineLength = prefs.getString("line_length", "20");
+			drawingThread.setLineLength(Integer.parseInt(lineLength));
+			
 			String lineWidth = prefs.getString("line_width", "MEDIUM");
 			drawingThread.setLineWidth(LineWidth.valueOf(lineWidth));
 			
