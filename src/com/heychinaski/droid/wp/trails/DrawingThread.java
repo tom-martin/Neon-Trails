@@ -15,6 +15,7 @@ import android.view.SurfaceHolder;
  */
 public abstract class DrawingThread extends Thread {
 
+	private static final int FRAMES_PER_SECOND = 60;
 	private boolean run;
 	private boolean wait;
 	private SurfaceHolder surfaceHolder;
@@ -87,6 +88,7 @@ public abstract class DrawingThread extends Thread {
 		this.run = true;
 		Canvas c = null;
 		while (run) {
+			long thisTick = 0;
 			try {
 				c = this.surfaceHolder.lockCanvas(null);
 				synchronized (this.surfaceHolder) {
@@ -95,6 +97,7 @@ public abstract class DrawingThread extends Thread {
 					updatePhysicis(previousTime, currentTime);
 					draw(c, previousTime, currentTime);
 
+					thisTick = System.currentTimeMillis() - currentTime;
 					previousTime = currentTime;
 				}
 			} finally {
@@ -107,6 +110,10 @@ public abstract class DrawingThread extends Thread {
 				if (wait) {
 					try {
 						wait();
+					} catch (Exception e) {}
+				} else {
+					try {
+						wait(Math.max(1, (1000 / FRAMES_PER_SECOND) - thisTick));
 					} catch (Exception e) {}
 				}
 			}
