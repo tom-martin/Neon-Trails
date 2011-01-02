@@ -8,6 +8,8 @@ package com.heychinaski.droid.wp.trails;
  *
  */
 public class DirectionList {
+	private static final int LENGTH = Direction.values().length;
+
 	public Direction[] directions = new Direction[4];
 	
 	private int length = 0;
@@ -18,7 +20,7 @@ public class DirectionList {
 
 	public void reset() {
 		length = 0;
-		for(int i = 0; i < Direction.values().length; i++) {
+		for(int i = 0; i < LENGTH; i++) {
 			directions[i] = null;
 		}
 	}

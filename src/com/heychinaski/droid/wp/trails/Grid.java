@@ -5,6 +5,11 @@ import java.util.Set;
 
 import android.graphics.Point;
 
+/**
+ * TODO use a map for the points so they never get gced?
+ * @author tomm
+ *
+ */
 public class Grid {
 	private int width;
 	private int height;

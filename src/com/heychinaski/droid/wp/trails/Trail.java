@@ -27,7 +27,7 @@ public class Trail {
 	private Direction currentDirection;
 
 	private List<Point> tail = new ArrayList<Point>();
-
+	
 	/** Also only used in one method */
 	private DirectionList availableDirections = new DirectionList();
 	
@@ -57,7 +57,7 @@ public class Trail {
 		}
 
 		availableDirections.reset();
-		for(Direction direction : Direction.values()) {
+		for(Direction direction : Direction.directionsValues) {
 			if(currentDirection == null || direction != currentDirection.getOppositeDirection()) {
 				destinationPoint.set(currentPoint.x, currentPoint.y);
 				direction.applyDirectionToPoint(destinationPoint);
@@ -72,6 +72,8 @@ public class Trail {
 			// Make sure we add the starting point.
 			if(tail.size() == 0) {
 				grid.set(currentPoint);
+				
+				//TODO somehow use the point allocated by grid above?
 				tail.add(new Point(currentPoint));
 			}
 			

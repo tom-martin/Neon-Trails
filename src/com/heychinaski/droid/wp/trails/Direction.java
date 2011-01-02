@@ -77,4 +77,6 @@ public enum Direction {
 		toMove.x += directionVector.x;
 		toMove.y += directionVector.y;
 	}
+	
+	public static final Direction[] directionsValues = new Direction[] {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
 }
