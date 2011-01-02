@@ -128,13 +128,13 @@ public class TrailView {
 	
 	public int interpColors(int startColor, int endColor, int alpha, float interp) {
 		return Color.argb(alpha, 
-					(int)interp(Color.red(startColor), Color.red(endColor), interp), 
-					(int)interp(Color.green(startColor), Color.green(endColor), interp), 
-					(int)interp(Color.blue(startColor), Color.blue(endColor), interp));
+					interp(Color.red(startColor), Color.red(endColor), interp), 
+					interp(Color.green(startColor), Color.green(endColor), interp), 
+					interp(Color.blue(startColor), Color.blue(endColor), interp));
 	}
 	
-	public float interp(float start, float end, float interp) {
-		return start + ((end - start) * interp);
+	public int interp(int start, int end, float interp) {
+		return (int)(start + ((end - start) * interp));
 	}
 
 	public Trail getTrail() {
