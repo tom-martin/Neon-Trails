@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.Bitmap.Config;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -20,10 +21,10 @@ import android.view.SurfaceHolder;
  */
 public class TrailsDrawingThread extends DrawingThread implements RenderContext {
 	
-	private final static int ADVANCE_TIME = 1000;
+	private final static int ADVANCE_TIME = 2000;
 	private static final int MAX_TRAILS = 200;
 	private Grid grid = null;
-	private int newTrailsRequired = 10;
+	private int newTrailsRequired = 5;
 	
 	private static final int LINE_LENGTH = 20;
 	
@@ -36,6 +37,9 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 	 * draw them into a Bitmap buffer and only update that when necessary */
 	private OldTrailsImageCache oldTrailsImageCache = new OldTrailsImageCache();
 	private Paint bitmapPaint = new Paint();
+	
+	private Rect cacheSrc = new Rect();
+	private Rect cacheDest = new Rect();
 	
 	public TrailsDrawingThread(SurfaceHolder surfaceHolder,
 			Context applicationContext) {
@@ -107,13 +111,10 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 		
 		return !trail.isTerminated();
 	}
-
+	
 	@Override
 	public void draw(Canvas c, long previousTime, long currentTime) {
 		c.save();
-		c.translate(offset, 0);
-		
-		c.drawColor(0xFF000000);
 
 		if(recreateCache) {
 			oldTrailsImageCache.recreateCache();
@@ -122,9 +123,13 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 		
 		Bitmap cacheImage = oldTrailsImageCache.getCache();
 		if(cacheImage != null) {
-			c.drawBitmap(cacheImage, 0, 0, bitmapPaint);
+			cacheSrc.set(-offset, 0, (-offset) + c.getWidth(), c.getHeight());
+			cacheDest.set(0, 0, c.getWidth(), c.getHeight());
+			c.drawBitmap(cacheImage, cacheSrc, cacheDest, bitmapPaint);
 		}
-			
+		
+		c.translate(offset, 0);
+		
 		for(int i = 0; i < trailViews.size(); i++) {
 			TrailView trailView = trailViews.get(i);
 			
@@ -183,7 +188,7 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 			Log.d("Cache", "Recreating cache");
 			Bitmap bitmap = null;
 			if(cache != null) {
-				cache.get();
+				bitmap = cache.get();
 			}
 			
 			if(bitmap == null) {
@@ -191,6 +196,8 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 				bitmap = Bitmap.createBitmap(width, height, Config.RGB_565);
 				cacheCanvas = new Canvas(bitmap);
 			}
+			
+			cacheCanvas.drawColor(0xFF000000);
 			
 			for(int i = 0; i < trailViews.size(); i++) {
 				TrailView trailView = trailViews.get(i);
