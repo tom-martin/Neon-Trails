@@ -1,0 +1,5 @@
+Android Live Wallpaper that animates a bunch of trails that randomly wind themselves around the screen.
+
+A lot of the code is optimised to minimise allocation of objects and garbage collection and also uses images buffers to cache drawing where possible.  These optimizations also have the undesired effect of reducing readability.
+
+
