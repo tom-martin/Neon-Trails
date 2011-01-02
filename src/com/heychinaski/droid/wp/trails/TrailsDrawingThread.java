@@ -224,7 +224,7 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 				cacheCanvas = new Canvas(bitmap);
 			}
 			
-			cacheCanvas.drawColor(0xFF000000);
+			cacheCanvas.drawColor(0xFF202020);
 			
 			for(int i = 0; i < trailViews.size(); i++) {
 				TrailView trailView = trailViews.get(i);
