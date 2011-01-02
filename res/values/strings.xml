@@ -7,8 +7,8 @@
     <string name="title_frames_per_second">Frames per second</string>
     <string name="summary_frames_per_second">Higher frames per second gives a smoother experience but may use up more battery.</string>
     
-    <string name="title_line_length">Trail segment length</string>
-    <string name="summary_line_length">Lower values mean the trails are more tightly wound</string>
+    <string name="title_line_length">Zoom</string>
+    <string name="summary_line_length">Closer zoom draws less trails larger</string>
     
     <string name="title_line_width">Trail thickness</string>
     <string name="summary_line_width">Thickness of the trails</string>

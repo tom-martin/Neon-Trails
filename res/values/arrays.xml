@@ -22,10 +22,10 @@
     </string-array>
     
    <string-array name="entries_line_length">
-        <item>Short</item>
-        <item>Medium</item>
-        <item>Long</item>
-        <item>Very Long</item>
+        <item>Far</item>
+        <item>Normal</item>
+        <item>Close</item>
+        <item>Very Close</item>
     </string-array>
     <string-array name="entryvalues_line_length">
         <item>10</item>
