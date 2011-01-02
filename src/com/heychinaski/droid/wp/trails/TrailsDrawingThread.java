@@ -21,12 +21,18 @@ import android.view.SurfaceHolder;
  */
 public class TrailsDrawingThread extends DrawingThread implements RenderContext {
 	
-	private final static int ADVANCE_TIME = 2000;
+	public enum LineWidth {
+		THIN, MEDIUM, THICK
+	}
+	
+	private final static int ADVANCE_TIME = 20;
 	private static final int MAX_TRAILS = 200;
 	private Grid grid = null;
 	private int newTrailsRequired = 5;
 	
 	private static final int LINE_LENGTH = 20;
+	
+	private LineWidth lineWidth = LineWidth.THIN;
 	
 	private List<Trail> trails = new ArrayList<Trail>();
 	private List<TrailView> trailViews = new ArrayList<TrailView>();
@@ -176,8 +182,21 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 	}
 	
 	@Override
-	public int getLineWidth() {
-		return LINE_LENGTH / 2;
+	public int getLineWidthInPixels() {
+		if(lineWidth == LineWidth.THIN) {
+			return LINE_LENGTH / 4;
+		} else if(lineWidth == LineWidth.THICK) {
+			return LINE_LENGTH - 2;
+		} else {
+			return LINE_LENGTH / 2;
+		}
+	}
+	
+	public void setLineWidth(LineWidth lineWidth) {
+		if(lineWidth != this.lineWidth) {
+			this.lineWidth = lineWidth;
+			recreateCache = true;
+		}
 	}
 	
 	private class OldTrailsImageCache extends ImageCache {

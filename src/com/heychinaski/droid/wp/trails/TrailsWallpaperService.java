@@ -6,6 +6,8 @@ import android.service.wallpaper.WallpaperService;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
+import com.heychinaski.droid.wp.trails.TrailsDrawingThread.LineWidth;
+
 /**
  * Wallpaper Service adapted from http://blog.androgames.net/58/android-live-wallpaper-tutorial/
  * @author tomm
@@ -23,7 +25,7 @@ public class TrailsWallpaperService extends WallpaperService {
 
 	private class ThreadDelegatingEngine extends Engine implements OnSharedPreferenceChangeListener {
 		
-		private DrawingThread drawingThread;
+		private TrailsDrawingThread drawingThread;
 
 		public ThreadDelegatingEngine() {
 			drawingThread = new TrailsDrawingThread(getSurfaceHolder(), getApplicationContext());
@@ -107,6 +109,9 @@ public class TrailsWallpaperService extends WallpaperService {
 		public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 			int framesPerSecond = Integer.parseInt(prefs.getString("frames_per_second", "30"));
 			drawingThread.setFramesPerSecond(framesPerSecond);
+			
+			String lineWidth = prefs.getString("line_width", "MEDIUM");
+			drawingThread.setLineWidth(LineWidth.valueOf(lineWidth));
 		}
 	}
 }

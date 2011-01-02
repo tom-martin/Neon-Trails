@@ -44,7 +44,6 @@ public class TrailView {
 		this.renderContext = renderContext;
 		
 		paint = new Paint();
-		paint.setStrokeWidth(Math.max(1, renderContext.getLineWidth()));
 		paint.setARGB(255, 255, 0, 0);
 		paint.setAntiAlias(true);
 		paint.setStrokeJoin(Join.ROUND);
@@ -55,6 +54,8 @@ public class TrailView {
 	}
 	
 	public void draw(Canvas c, long previousTime, long currentTime) {
+		paint.setStrokeWidth(Math.max(1, renderContext.getLineWidthInPixels()));
+		
 		List<Point> tail = trail.getTail();
 		
 		int size = tail.size();
@@ -109,7 +110,7 @@ public class TrailView {
 				paint.setColor(endColor);
 				for(int i = 0; i < blurs.length; i++) {
 					paint.setMaskFilter(blurs[i]);
-					c.drawCircle(pointB.x, pointB.y, renderContext.getLineWidth(), paint);	
+					c.drawCircle(pointB.x, pointB.y, renderContext.getLineWidthInPixels(), paint);	
 				}
 				paint.setMaskFilter(null);
 			}

@@ -15,6 +15,6 @@ public interface RenderContext {
 
 	int getLineLength();
 
-	int getLineWidth();
+	int getLineWidthInPixels();
 
 }

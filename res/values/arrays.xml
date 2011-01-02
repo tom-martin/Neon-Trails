@@ -9,4 +9,15 @@
 		<item>30</item>
 		<item>60</item>
 	</string-array>
+	
+	   <string-array name="entries_line_width">
+        <item>Thin</item>
+        <item>Medium</item>
+        <item>Thick</item>
+    </string-array>
+    <string-array name="entryvalues_line_width">
+        <item>THIN</item>
+        <item>MEDIUM</item>
+        <item>THICK</item>
+    </string-array>
 </resources>
