@@ -15,11 +15,16 @@
 		android:summary="@string/summary_line_length" android:entries="@array/entries_line_length"
 		android:entryValues="@array/entryvalues_line_length"
 		android:dialogTitle="@string/title_line_length" />
-		
-    <ListPreference android:key="line_width" android:title="@string/title_line_width"
-        android:summary="@string/summary_line_width" android:entries="@array/entries_line_width"
-        android:entryValues="@array/entryvalues_line_width"
-        android:dialogTitle="@string/title_line_width" />
+
+	<ListPreference android:key="line_width" android:title="@string/title_line_width"
+		android:summary="@string/summary_line_width" android:entries="@array/entries_line_width"
+		android:entryValues="@array/entryvalues_line_width"
+		android:dialogTitle="@string/title_line_width" />
+
+	<ListPreference android:key="color_scheme" android:title="@string/title_color_scheme"
+		android:summary="@string/summary_color_scheme" android:entries="@array/entries_color_scheme"
+		android:entryValues="@array/entryvalues_color_scheme"
+		android:dialogTitle="@string/title_color_scheme" />
 
 
 </PreferenceScreen>

@@ -118,6 +118,9 @@ public class TrailsWallpaperService extends WallpaperService {
 			
 			int trail_speed = Integer.parseInt(prefs.getString("trail_speed", "2000"));
 			drawingThread.setAdvanceTime(trail_speed);
+			
+			String colorScheme = prefs.getString("color_scheme", "ANY");
+			drawingThread.setColorGenerator(ColorScheme.valueOf(colorScheme).getColorGenerator());
 		}
 	}
 }

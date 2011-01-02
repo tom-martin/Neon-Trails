@@ -15,4 +15,7 @@
     
     <string name="title_trail_speed">Trail speed</string>
     <string name="summary_trail_speed">How fast the trails move (Slower trails conserve battery and render more smoothly)</string>
+    
+    <string name="title_color_scheme">Trail colors</string>
+    <string name="summary_color_scheme">Color scheme of the trails</string>
 </resources>

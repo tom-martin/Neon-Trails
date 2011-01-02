@@ -11,6 +11,8 @@ import android.graphics.BlurMaskFilter.Blur;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Join;
 
+import com.heychinaski.droid.wp.trails.color.ColorGenerator;
+
 /**
  * Draws one Trail.  Not an Android "View"
  * @author tomm
@@ -28,8 +30,8 @@ public class TrailView {
 	
 	private final RenderContext renderContext;
 	
-	private final int startColor;
-	private final int endColor;
+	private int startColor;
+	private int endColor;
 	
 	private BlurMaskFilter blurs[] = new BlurMaskFilter[] {
 																			new BlurMaskFilter(5, Blur.SOLID),
@@ -37,6 +39,8 @@ public class TrailView {
 																			new BlurMaskFilter(15, Blur.SOLID),
 																			new BlurMaskFilter(20, Blur.SOLID), 
 																			null};
+	
+	private ColorGenerator previousColorGenerator = null;
 
 	public TrailView(RenderContext renderContext, Trail trail) {
 		super();
@@ -48,13 +52,17 @@ public class TrailView {
 		paint.setAntiAlias(true);
 		paint.setStrokeJoin(Join.ROUND);
 		paint.setStrokeCap(Cap.ROUND);
-		
-		startColor = Color.rgb(10 + (int)(Math.random() * 246), 10 + (int)(Math.random() * 246), 10 + (int)(Math.random() * 246));
-		endColor = Color.rgb(10 + (int)(Math.random() * 246), 10 + (int)(Math.random() * 246), 10 + (int)(Math.random() * 246));
 	}
 	
 	public void draw(Canvas c, long previousTime, long currentTime) {
 		paint.setStrokeWidth(Math.max(1, renderContext.getLineWidthInPixels()));
+		
+		ColorGenerator currentColorGenerator = renderContext.getColorGenerator();
+		if(currentColorGenerator != previousColorGenerator) {
+			previousColorGenerator = currentColorGenerator;
+			startColor = currentColorGenerator.generateColor();
+			endColor = currentColorGenerator.generateColor();
+		}
 		
 		List<Point> tail = trail.getTail();
 		

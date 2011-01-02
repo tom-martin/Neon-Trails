@@ -14,6 +14,9 @@ import android.graphics.Bitmap.Config;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import com.heychinaski.droid.wp.trails.color.ColorGenerator;
+import com.heychinaski.droid.wp.trails.color.RandomColorGenerator;
+
 /**
  * Implementation of DrawingThread that draws the trails.
  * @author tomm
@@ -50,6 +53,8 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 	
 	private Rect cacheSrc = new Rect();
 	private Rect cacheDest = new Rect();
+	
+	private ColorGenerator colorGenerator = new RandomColorGenerator();
 	
 	public TrailsDrawingThread(SurfaceHolder surfaceHolder,
 			Context applicationContext) {
@@ -244,6 +249,18 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 			recreateCache = true;
 			this.lineLength = lineLength;
 			setSurfaceSize(width, height);
+		}
+	}
+
+	@Override
+	public ColorGenerator getColorGenerator() {
+		return colorGenerator;
+	}
+
+	public void setColorGenerator(ColorGenerator colorGenerator) {
+		if(colorGenerator != this.colorGenerator) {
+			this.colorGenerator = colorGenerator;
+			recreateCache = true;
 		}
 	}
 }

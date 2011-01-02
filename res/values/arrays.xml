@@ -1,7 +1,7 @@
 <resources>
 	<string-array name="entries_frames_per_second">
 		<item>10</item>
-		<item>30 (Recommended)</item>
+		<item>30 (Recommended, Default)</item>
 		<item>60</item>
 	</string-array>
 	<string-array name="entryvalues_frames_per_second">
@@ -12,7 +12,7 @@
 	
    <string-array name="entries_line_width">
         <item>Thin</item>
-        <item>Medium</item>
+        <item>Medium (Default)</item>
         <item>Thick</item>
     </string-array>
     <string-array name="entryvalues_line_width">
@@ -23,7 +23,7 @@
     
    <string-array name="entries_line_length">
         <item>Far</item>
-        <item>Normal</item>
+        <item>Normal (Default)</item>
         <item>Close</item>
         <item>Very Close</item>
     </string-array>
@@ -35,7 +35,7 @@
     </string-array>
     
     <string-array name="entries_trail_speed">
-        <item>Slow (Recommended)</item>
+        <item>Slow (Recommended, Default)</item>
         <item>Medium</item>
         <item>Fast</item>
         <item>Very Fast</item>
@@ -45,5 +45,26 @@
         <item>1000</item>
         <item>500</item>
         <item>100</item>
+    </string-array>
+    
+        <string-array name="entries_color_scheme">
+        <item>Any (Default)</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Yellow</item>
+        <item>Light Blue</item>
+        <item>Pink</item>
+        <item>Black &amp; White</item>
+    </string-array>
+    <string-array name="entryvalues_color_scheme">
+        <item>ANY</item>
+        <item>RED</item>
+        <item>GREEN</item>
+        <item>BLUE</item>
+        <item>YELLOW</item>
+        <item>LIGHT_BLUE</item>
+        <item>PINK</item>
+        <item>BLACK_AND_WHITE</item>
     </string-array>
 </resources>
