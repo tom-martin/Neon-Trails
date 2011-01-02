@@ -1,0 +1,12 @@
+<resources>
+	<string-array name="entries_frames_per_second">
+		<item>10</item>
+		<item>30 (Recommended)</item>
+		<item>60</item>
+	</string-array>
+	<string-array name="entryvalues_frames_per_second">
+		<item>10</item>
+		<item>30</item>
+		<item>60</item>
+	</string-array>
+</resources>

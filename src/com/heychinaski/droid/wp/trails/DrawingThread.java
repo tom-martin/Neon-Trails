@@ -16,7 +16,7 @@ import android.view.SurfaceHolder;
  */
 public abstract class DrawingThread extends Thread {
 
-	private static final int FRAMES_PER_SECOND = 60;
+	private static final int DEFAULT_FRAMES_PER_SECOND = 30;
 	private boolean run;
 	private boolean wait;
 	private SurfaceHolder surfaceHolder;
@@ -27,6 +27,8 @@ public abstract class DrawingThread extends Thread {
 	private long previousTime;
 	private Paint debugPaint;
 	protected int offset;
+	
+	private int framesPerSecond = DEFAULT_FRAMES_PER_SECOND;
 
 	private FrameRateCalculator fpsCalculator = new FrameRateCalculator();
 	
@@ -116,9 +118,9 @@ public abstract class DrawingThread extends Thread {
 				} else {
 					try {
 						thisTick = System.currentTimeMillis() - currentTime;
-						wait(Math.max(1, (1000 / FRAMES_PER_SECOND) - thisTick));
+						wait(Math.max(1, (1000 / framesPerSecond) - thisTick));
 						// uncomment to get a log of the frames per second
-//						fpsCalculator.calculateFPS();
+						fpsCalculator.calculateFPS();
 					} catch (Exception e) {}
 				}
 			}
@@ -176,4 +178,8 @@ public abstract class DrawingThread extends Thread {
 			    }
 			}
 		}
+
+	public void setFramesPerSecond(int framesPerSecond) {
+		this.framesPerSecond = framesPerSecond;
+	}
 }

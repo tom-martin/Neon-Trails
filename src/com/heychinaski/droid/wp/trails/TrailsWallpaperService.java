@@ -1,5 +1,7 @@
 package com.heychinaski.droid.wp.trails;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.service.wallpaper.WallpaperService;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -11,16 +13,25 @@ import android.view.SurfaceHolder;
  */
 public class TrailsWallpaperService extends WallpaperService {
 
+	public static final String SHARED_PREFS_NAME = "com.heychinaski.droid.wp.trails.NeonTrailsPrefs";
+	
 	@Override
 	public Engine onCreateEngine() {
-		return new ThreadDelegatingEngine();
+		ThreadDelegatingEngine threadDelegatingEngine = new ThreadDelegatingEngine();
+		return threadDelegatingEngine;
 	}
 
-	private class ThreadDelegatingEngine extends Engine {
+	private class ThreadDelegatingEngine extends Engine implements OnSharedPreferenceChangeListener {
+		
 		private DrawingThread drawingThread;
 
 		public ThreadDelegatingEngine() {
 			drawingThread = new TrailsDrawingThread(getSurfaceHolder(), getApplicationContext());
+			
+			SharedPreferences prefs = getSharedPreferences(SHARED_PREFS_NAME, 0);
+	    prefs.registerOnSharedPreferenceChangeListener(this);
+	    
+	    onSharedPreferenceChanged(prefs, null);
 		}
 
 		@Override
@@ -91,7 +102,12 @@ public class TrailsWallpaperService extends WallpaperService {
 			super.onTouchEvent(event);
 			drawingThread.doTouchEvent(event);
 		}
+		
+		@Override
+		public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+			int framesPerSecond = Integer.parseInt(prefs.getString("frames_per_second", "30"));
+			drawingThread.setFramesPerSecond(framesPerSecond);
+		}
 	}
-
 }
 

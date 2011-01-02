@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Neon Trails Wallpaper</string>
+    
+    <string name="settings_title">Neon Trails Wallpaper Settings</string>
+    
+    <string name="title_frames_per_second">Frames per second</string>
+    <string name="summary_frames_per_second">Higher frames per second gives a smoother experience but may use up more battery.</string>
 </resources>

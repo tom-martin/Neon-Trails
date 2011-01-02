@@ -2,17 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.heychinaski.droid.wp.trails" android:versionCode="1"
 	android:versionName="1.0">
-	<application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
+	<application android:icon="@drawable/icon" android:label="@string/app_name"
+		android:debuggable="true">
 		<service android:name="TrailsWallpaperService"
 			android:enabled="true" android:icon="@drawable/icon" android:label="@string/app_name"
 			android:permission="android.permission.BIND_WALLPAPER">
 			<intent-filter android:priority="1">
 				<action android:name="android.service.wallpaper.WallpaperService" />
 			</intent-filter>
-			    <meta-data 
-			      android:name="android.service.wallpaper" 
-			      android:resource="@xml/wallpaper" />
+			<meta-data android:name="android.service.wallpaper"
+				android:resource="@xml/wallpaper" />
 		</service>
+
+		<activity android:label="@string/settings_title"
+			android:theme="@android:style/Theme.Light.WallpaperSettings"
+			android:exported="true" android:name="TrailsPreferenceActivity">
+		</activity>
+
 
 	</application>
 
