@@ -120,7 +120,7 @@ public abstract class DrawingThread extends Thread {
 						thisTick = System.currentTimeMillis() - currentTime;
 						wait(Math.max(1, (1000 / framesPerSecond) - thisTick));
 						// uncomment to get a log of the frames per second
-						fpsCalculator.calculateFPS();
+//						fpsCalculator.calculateFPS();
 					} catch (Exception e) {}
 				}
 			}
