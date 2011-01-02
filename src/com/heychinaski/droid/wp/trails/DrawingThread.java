@@ -3,6 +3,7 @@ package com.heychinaski.droid.wp.trails;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
@@ -27,6 +28,8 @@ public abstract class DrawingThread extends Thread {
 	private Paint debugPaint;
 	protected int offset;
 
+	private FrameRateCalculator fpsCalculator = new FrameRateCalculator();
+	
 	public DrawingThread(SurfaceHolder surfaceHolder, Context applicationContext) {
 		// keep a reference of the context and the surface
 		// the context is needed if you want to inflate
@@ -97,7 +100,6 @@ public abstract class DrawingThread extends Thread {
 					updatePhysicis(previousTime, currentTime);
 					draw(c, previousTime, currentTime);
 
-					thisTick = System.currentTimeMillis() - currentTime;
 					previousTime = currentTime;
 				}
 			} finally {
@@ -113,7 +115,10 @@ public abstract class DrawingThread extends Thread {
 					} catch (Exception e) {}
 				} else {
 					try {
+						thisTick = System.currentTimeMillis() - currentTime;
 						wait(Math.max(1, (1000 / FRAMES_PER_SECOND) - thisTick));
+						// uncomment to get a log of the frames per second
+//						fpsCalculator.calculateFPS();
 					} catch (Exception e) {}
 				}
 			}
@@ -131,4 +136,44 @@ public abstract class DrawingThread extends Thread {
 	public void setOffset(int xPixels) {
 		this.offset = xPixels;
 	}
+	
+	/**
+	 * Adapted from http://mycodelog.com/2010/04/16/fp
+	 * @author tomm
+	 *
+	 */
+	public static class FrameRateCalculator {
+		private int frameCount;
+		private float fps;
+		private long previousTime;
+		private long currentTime;
+
+			//-------------------------------------------------------------------------
+			// Calculates the frames per second
+			//-------------------------------------------------------------------------
+			public void calculateFPS() {
+			    //  Increase frame count
+			    frameCount++;
+		
+			    //  Get the number of milliseconds since glutInit called
+			    //  (or first call to glutGet(GLUT ELAPSED TIME)).
+			    currentTime = System.currentTimeMillis();
+		
+			    //  Calculate time passed
+			    long timeInterval = currentTime - previousTime;
+		
+			    if(timeInterval > 1000) {
+			        //  calculate the number of frames per second
+			        fps = frameCount / (timeInterval / 1000.0f);
+		
+			        //  Set time
+			        previousTime = currentTime;
+		
+			        //  Reset frame count
+			        frameCount = 0;
+			        
+			        Log.d("Frame rate:", "fps: " + fps);
+			    }
+			}
+		}
 }
