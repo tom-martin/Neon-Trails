@@ -50,8 +50,8 @@ public class TrailView {
 		paint.setStrokeJoin(Join.ROUND);
 		paint.setStrokeCap(Cap.ROUND);
 		
-		startColor = Color.rgb(10 + (int)(Math.random() * 255), 10 + (int)(Math.random() * 255), 10 + (int)(Math.random() * 255));
-		endColor = Color.rgb(10 + (int)(Math.random() * 255), 10 + (int)(Math.random() * 255), 10 + (int)(Math.random() * 255));
+		startColor = Color.rgb(10 + (int)(Math.random() * 246), 10 + (int)(Math.random() * 246), 10 + (int)(Math.random() * 246));
+		endColor = Color.rgb(10 + (int)(Math.random() * 246), 10 + (int)(Math.random() * 246), 10 + (int)(Math.random() * 246));
 	}
 	
 	public void draw(Canvas c, long previousTime, long currentTime) {
