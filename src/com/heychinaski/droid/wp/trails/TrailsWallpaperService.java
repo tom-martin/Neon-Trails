@@ -17,6 +17,8 @@ public class TrailsWallpaperService extends WallpaperService {
 
 	public static final String SHARED_PREFS_NAME = "com.heychinaski.droid.wp.trails.NeonTrailsPrefs";
 	
+	public boolean startOnSurfaceChanged = false;
+	
 	@Override
 	public Engine onCreateEngine() {
 		ThreadDelegatingEngine threadDelegatingEngine = new ThreadDelegatingEngine();
@@ -65,13 +67,20 @@ public class TrailsWallpaperService extends WallpaperService {
 				int width, int height) {
 			super.onSurfaceChanged(holder, format, width, height);
 			drawingThread.setSurfaceSize(getDesiredMinimumWidth(), getDesiredMinimumHeight());
+			if(startOnSurfaceChanged) {
+				// start painting
+				drawingThread.start();
+				startOnSurfaceChanged = false;
+			}
+			
 		}
 
 		@Override
 		public void onSurfaceCreated(SurfaceHolder holder) {
 			super.onSurfaceCreated(holder);
-			// start painting
-			drawingThread.start();
+			
+			// Start once we get told about the surface size.
+			startOnSurfaceChanged = true;
 		}
 
 		@Override

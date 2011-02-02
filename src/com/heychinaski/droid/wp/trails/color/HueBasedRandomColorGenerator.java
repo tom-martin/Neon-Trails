@@ -3,22 +3,23 @@ package com.heychinaski.droid.wp.trails.color;
 import android.graphics.Color;
 
 public class HueBasedRandomColorGenerator implements ColorGenerator {
-	private static final int LOWEST_COLOR_VALUE = 10;
+	private final int lowestColorValue;
 	public final static int RED = 0;
 	public final static int GREEN = 1;
 	public final static int BLUE = 2;
 	
 	public int[] mainColorIndexes;
 
-	public HueBasedRandomColorGenerator(int ... colors) {
+	public HueBasedRandomColorGenerator(int lowestColorValue, int ... colors) {
+		this.lowestColorValue = lowestColorValue;
 		mainColorIndexes = colors;
 	}
 	
 	@Override
 	public int generateColor() {
-		int mainColorValue = LOWEST_COLOR_VALUE + (int)(Math.random() * (256 - LOWEST_COLOR_VALUE));
+		int mainColorValue = lowestColorValue + (int)(Math.random() * (256 - lowestColorValue));
 		
-		int secondaryColorValue = LOWEST_COLOR_VALUE + (int)(Math.random() * (mainColorValue - LOWEST_COLOR_VALUE));
+		int secondaryColorValue = lowestColorValue + (int)(Math.random() * (mainColorValue - lowestColorValue));
 		
 		int colorValues[] = new int[] {-1, -1, -1};
 		

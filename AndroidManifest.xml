@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.heychinaski.droid.wp.trails" android:versionCode="2"
-	android:versionName="1.1">
+	package="com.heychinaski.droid.wp.trails" android:versionName="1.2" android:versionCode="3">
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
 		<service android:name="TrailsWallpaperService"
 			android:enabled="true" android:icon="@drawable/icon" android:label="@string/app_name"

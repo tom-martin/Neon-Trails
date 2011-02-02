@@ -7,6 +7,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -26,6 +27,9 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 	public enum LineWidth {
 		THIN, MEDIUM, THICK
 	}
+	
+	public final static int BG_COLOR = 0xFF202020;
+	public static final int LOWEST_COLOR_VALUE = Color.red(TrailsDrawingThread.BG_COLOR) + 10;
 	
 	private final static int DEFAULT_ADVANCE_TIME = 2000;
 	private static final int MAX_TRAILS = 200;
@@ -53,7 +57,7 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 	private Rect cacheSrc = new Rect();
 	private Rect cacheDest = new Rect();
 	
-	private ColorGenerator colorGenerator = new RandomColorGenerator();
+	private ColorGenerator colorGenerator = new RandomColorGenerator(LOWEST_COLOR_VALUE);
 	
 	public TrailsDrawingThread(SurfaceHolder surfaceHolder,
 			Context applicationContext) {
@@ -140,6 +144,8 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 			cacheSrc.set(-offset, 0, (-offset) + c.getWidth(), c.getHeight());
 			cacheDest.set(0, 0, c.getWidth(), c.getHeight());
 			c.drawBitmap(cacheImage, cacheSrc, cacheDest, bitmapPaint);
+		} else {
+			recreateCache = true;
 		}
 		
 		c.translate(offset, 0);
@@ -219,6 +225,10 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 			}
 			
 			if(bitmap == null) {
+				if(width <= 0 || height <= 0) {
+					// Ouch, no width/height, can't create an image
+					return;
+				}
 //				Log.d("Cache", "Reallocating bitmap");
 				bitmap = Bitmap.createBitmap(width, height, Config.RGB_565);
 				cacheCanvas = new Canvas(bitmap);

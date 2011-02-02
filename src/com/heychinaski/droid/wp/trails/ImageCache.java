@@ -17,12 +17,18 @@ public abstract class ImageCache {
 		Bitmap hardReference = null;
 		if(cache != null) {
 			hardReference = cache.get();
+		} else {
+			return null;
 		}
 		
 		// Do we need to recreate the cache?
 		while(hardReference == null) {
 			recreateCache();
-			hardReference = cache.get();
+			if(cache != null) {
+				hardReference = cache.get();
+			} else {
+				return null;
+			}
 		}
 		
 		return hardReference;
