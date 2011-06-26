@@ -28,6 +28,8 @@ public class TrailsWallpaperService extends WallpaperService {
 	private class ThreadDelegatingEngine extends Engine implements OnSharedPreferenceChangeListener {
 		
 		private TrailsDrawingThread drawingThread;
+		private int desiredMinimumWidth;
+		private int desiredMinimumHeight;
 
 		public ThreadDelegatingEngine() {
 			drawingThread = new TrailsDrawingThread(getSurfaceHolder(), getApplicationContext());
@@ -65,9 +67,21 @@ public class TrailsWallpaperService extends WallpaperService {
 		@Override
 		public void onSurfaceChanged(SurfaceHolder holder, int format, 
 				int width, int height) {
+			
+			
 			super.onSurfaceChanged(holder, format, width, height);
-			drawingThread.setSurfaceSize(getDesiredMinimumWidth(), getDesiredMinimumHeight());
-			if(startOnSurfaceChanged) {
+			desiredMinimumWidth = getDesiredMinimumWidth();
+			desiredMinimumHeight = getDesiredMinimumHeight();
+			
+			/*
+			 * If the lazy/incompetent Samsung developers won't tell us what dimensions their home screen
+			 * desires, we'll just pick one (twice the width and the same height)
+			 */
+			desiredMinimumWidth = desiredMinimumWidth <= 0 ? width * 2 : desiredMinimumWidth;
+			desiredMinimumHeight = desiredMinimumHeight <= 0 ? height : desiredMinimumHeight;
+			
+			drawingThread.setSurfaceSize(desiredMinimumWidth, desiredMinimumHeight);
+			if(startOnSurfaceChanged && desiredMinimumWidth > 1 && desiredMinimumHeight > 1) {
 				// start painting
 				drawingThread.start();
 				startOnSurfaceChanged = false;
@@ -99,6 +113,16 @@ public class TrailsWallpaperService extends WallpaperService {
 		@Override
 		public void onOffsetsChanged(float xOffset, float yOffset, 
 				float xStep, float yStep, int xPixels, int yPixels) {
+			
+			/*
+			 * Lazy Samsung developers/incompetent don't seem to be setting xPixels in their implementation of
+			 * their home screen.  If it's not set then we'll try and mimick what the implementation
+			 * might have been doing (I have worked this out from trial and error).
+			 */
+			if(xPixels <= 0 && xOffset > 0 && desiredMinimumWidth > 0 && desiredMinimumHeight > 0) {
+				xPixels = -Math.round(desiredMinimumWidth * (xOffset / 2));
+			}
+			
 			drawingThread.setOffset(xPixels);
 		}
 		
