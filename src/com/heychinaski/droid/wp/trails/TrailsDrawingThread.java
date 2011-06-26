@@ -72,11 +72,11 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 		
 		if(newTrailsRequired > 0) {
 			if(trails.size() > MAX_TRAILS) {
-				if(recycleTrail()) {
+				if(recycleTrail(currentTime)) {
 					newTrailsRequired --;
 				}
 			} else {
-				if(createNewTrail()) {
+				if(createNewTrail(currentTime)) {
 					newTrailsRequired --;
 				}
 			}
@@ -84,6 +84,7 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 		
 		for(int i = 0; i < trails.size(); i++) {
 			Trail trail = trails.get(i);
+			
 			if(currentTime - trail.getLastAdvanceTime() > advanceTime) {
 				if(!trail.isTerminated()) {
 					trail.advance();
@@ -92,14 +93,21 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 						recreateCache  = true;
 						newTrailsRequired ++;
 					} else {
-						trail.setLastAdvanceTime(currentTime);
+						// If the time has only changed a small amount use the "real" time
+						// that the trail should have advanced so it keeps moving smoothly
+						if(((currentTime - previousTime) / advanceTime) < 1) {
+							trail.setLastAdvanceTime(trail.getLastAdvanceTime() + advanceTime);
+						} else {
+							// If time has changed significantly (i.e the wallpaper has been paused) lock the last advance time to now
+							trail.setLastAdvanceTime(currentTime);
+						}
 					}
 				}
 			}
 		}
 	}
 
-	private boolean recycleTrail() {
+	private boolean recycleTrail(long time) {
 		Trail oldTrail = trails.get(0);
 		TrailView trailView = trailViews.get(0);
 		
@@ -114,18 +122,21 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 		
 		trails.add(oldTrail);
 		trailViews.add(trailView);
+		oldTrail.setLastAdvanceTime(time);
 		
 		recreateCache = true;
 		return !oldTrail.isTerminated();
 	}
 
-	private boolean createNewTrail() {
+	private boolean createNewTrail(long time) {
 		Trail trail = new Trail(grid);
 		TrailView newTrailView = new TrailView(this, trail);
 		trail.advance();
+		trail.setLastAdvanceTime(time);
 		
 		trails.add(trail);
 		trailViews.add(newTrailView);
+		
 		
 		return !trail.isTerminated();
 	}
@@ -257,6 +268,7 @@ public class TrailsDrawingThread extends DrawingThread implements RenderContext 
 		if(lineLength != this.lineLength) {
 			recreateCache = true;
 			this.lineLength = lineLength;
+			
 			setSurfaceSize(width, height);
 		}
 	}
